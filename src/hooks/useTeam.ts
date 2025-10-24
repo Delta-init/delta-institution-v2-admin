@@ -41,6 +41,7 @@ export const useCareerById = (id: string) => {
 };
 
 export const useCreateTeam = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [requirements, setRequirements] = useState<string[]>([]);
   const [team, setTeam] = useState<ITeam[]>([]);
   const [initiaFile, setInitiaFile] = useState<string | null>(null);
@@ -76,7 +77,7 @@ export const useCreateTeam = () => {
   );
 
 
-  return { mutate, isPending, form, formState, errors, onFormSubmit, watch, setRequirements, initiaFile, requirements };
+  return { mutate, isPending, form, formState, errors, onFormSubmit, watch, setRequirements, initiaFile, requirements,isLoading };
 };
 
 
@@ -85,7 +86,7 @@ export const useUpdateTeam = (id: string) => {
   const [initiaFile, setInitiaFile] = useState<string | null>(null);
   const { data: session } = useSession();
   const router = useRouter();
-  const { data, isPending: isLoading, isFetched } = useQueryData(["careerById"], () =>
+  const { data, isPending: isLoading, isFetched } = useQueryData(["careerById",id], () =>
     getTeamById(session?.user.token, id)
   );
 
@@ -119,7 +120,7 @@ export const useUpdateTeam = (id: string) => {
 
 
 
-  return { mutate, isPending, form, formState, errors, onFormSubmit, watch, setRequirements, initiaFile, requirements };
+  return { mutate, isPending, form, formState, errors, onFormSubmit, watch, setRequirements, initiaFile, requirements,isLoading };
 }
 
 

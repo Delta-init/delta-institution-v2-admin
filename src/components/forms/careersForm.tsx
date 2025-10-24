@@ -20,7 +20,7 @@ import { Switch } from "../ui/switch";
 import { cn } from "@/lib/utils";
 
 const CareersForm = ({ id }: { id?: string }) => {
-    const [requirementInput, setRequirementInput] = useState("");
+  const [requirementInput, setRequirementInput] = useState("");
   const [category, setCategory] = useState("general");
   const [document, setDocument] = useState<File[]>([]);
 
@@ -33,6 +33,7 @@ const CareersForm = ({ id }: { id?: string }) => {
     setRequirements,
     requirements,
     initiaFile,
+    isLoading,
   } = hook;
 
   // Add Tag
@@ -59,13 +60,23 @@ const CareersForm = ({ id }: { id?: string }) => {
     form.setValue("requirements", updatedTags);
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <Loader2 className="animate-spin" size={24} />
+      </div>
+    );
+  }
   return (
-    <form onSubmit={onFormSubmit} className=" grid md:grid-cols-1 gap-4  w-full overflow-hidden">
+    <form
+      onSubmit={onFormSubmit}
+      className=" grid md:grid-cols-1 gap-4  w-full overflow-hidden"
+    >
       {/* Title */}
       <div className="flex flex-col gap-2">
         <Label htmlFor="title">Title</Label>
         <Input
-         className={cn(errors.title&&"border-red-500")}
+          className={cn(errors.title && "border-red-500")}
           id="title"
           {...form.register("title")}
           placeholder="Enter Job title"
@@ -79,7 +90,7 @@ const CareersForm = ({ id }: { id?: string }) => {
       <div className="flex flex-col gap-2">
         <Label htmlFor="description">Description</Label>
         <Textarea
-         className={cn(errors.description&&"border-red-500")}
+          className={cn(errors.description && "border-red-500")}
           id="description"
           {...form.register("description")}
           placeholder="Enter Job description"
@@ -94,18 +105,17 @@ const CareersForm = ({ id }: { id?: string }) => {
       <div className="flex flex-col gap-2">
         <Label>Document</Label>
         <FileUploader
-         className={cn(errors.document&&"border-red-500")}
-            value={document}
-            initialFileLink={initiaFile}
+          className={cn(errors.document && "border-red-500")}
+          value={document}
+          initialFileLink={initiaFile}
           onValueChange={(file) => {
             setDocument(file);
             form.setValue("document", file[0]);
           }}
           onUpload={(files) => {
-           
             return Promise.resolve();
           }}
-          accept={{ 'application/pdf': ['.pdf'] }}
+          accept={{ "application/pdf": [".pdf"] }}
           maxFiles={1}
           maxSize={1024 * 1024 * 10} // 10MB
         />
@@ -115,7 +125,7 @@ const CareersForm = ({ id }: { id?: string }) => {
       <div className="flex flex-col gap-2">
         <Label htmlFor="position">Position</Label>
         <Input
-         className={cn(errors.position&&"border-red-500")}
+          className={cn(errors.position && "border-red-500")}
           id="position"
           {...form.register("position")}
           placeholder="Enter position"
@@ -129,7 +139,7 @@ const CareersForm = ({ id }: { id?: string }) => {
       <div className="flex flex-col gap-2">
         <Label htmlFor="location">Location</Label>
         <Input
-         className={cn(errors.location&&"border-red-500")}
+          className={cn(errors.location && "border-red-500")}
           id="location"
           {...form.register("location")}
           placeholder="Enter location"
@@ -155,13 +165,15 @@ const CareersForm = ({ id }: { id?: string }) => {
           ))}
 
           <input
-
             type="text"
             value={requirementInput}
             onChange={(e) => setRequirementInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Enter requirements and press Enter"
-            className={cn("flex-1 min-w-[150px] bg-transparent outline-none text-foreground placeholder:text-muted-foreground",errors.requirements&&"border-red-500")}
+            className={cn(
+              "flex-1 min-w-[150px] bg-transparent outline-none text-foreground placeholder:text-muted-foreground",
+              errors.requirements && "border-red-500"
+            )}
           />
         </div>
         {errors.requirements && (
@@ -173,7 +185,7 @@ const CareersForm = ({ id }: { id?: string }) => {
       <div className="flex flex-col gap-2">
         <Label htmlFor="salaryRange">Salary Range</Label>
         <Input
-         className={cn(errors.salaryRange&&"border-red-500")}
+          className={cn(errors.salaryRange && "border-red-500")}
           id="salaryRange"
           {...form.register("salaryRange")}
           placeholder="Enter salary range"
@@ -182,7 +194,11 @@ const CareersForm = ({ id }: { id?: string }) => {
       {/* Is Active */}
       <div className="flex items-center gap-2">
         <Label htmlFor="isActive">Is Active</Label>
-        <Switch id="isActive" checked={form.watch("isActive")} onCheckedChange={(checked) => form.setValue("isActive", checked)} />
+        <Switch
+          id="isActive"
+          checked={form.watch("isActive")}
+          onCheckedChange={(checked) => form.setValue("isActive", checked)}
+        />
         {errors.isActive && (
           <p className="text-sm text-red-500">{errors.isActive.message}</p>
         )}

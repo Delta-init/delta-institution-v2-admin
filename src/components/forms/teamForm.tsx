@@ -15,8 +15,15 @@ const TeamForm = ({ id }: { id?: string }) => {
   const [image, setImage] = useState<File | null>(null);
 
   const hook = id ? useUpdateTeam(id) : useCreateTeam();
-  const { form, errors, onFormSubmit, isPending, initiaFile } = hook;
+  const { form, errors, onFormSubmit, isPending, initiaFile, isLoading } = hook;
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <Loader2 className="animate-spin" size={24} />
+      </div>
+    );
+  }
   return (
     <form
       onSubmit={onFormSubmit}
@@ -47,7 +54,7 @@ const TeamForm = ({ id }: { id?: string }) => {
         />
         {errors.position && (
           <p className="text-sm text-red-500">{errors.position.message}</p>
-        )}  
+        )}
       </div>
 
       {/* Image */}
@@ -70,9 +77,6 @@ const TeamForm = ({ id }: { id?: string }) => {
         />
       </div>
 
-   
-   
-
       {/* Showing Position */}
       <div className="flex flex-col gap-2">
         <Label htmlFor="showingPosition">Showing Position</Label>
@@ -81,10 +85,9 @@ const TeamForm = ({ id }: { id?: string }) => {
           id="showingPosition"
           {...form.register("showingPosition")}
           onChange={(e) => {
-            if(e.target.value === "") {
+            if (e.target.value === "") {
               form.setValue("showingPosition", 0);
-            }
-            else {
+            } else {
               form.setValue("showingPosition", parseInt(e.target.value));
             }
           }}

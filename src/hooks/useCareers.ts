@@ -12,6 +12,7 @@ import { careersSchema } from "@/schema/careersSchema";
 import { IApplication } from "@/types/IApplication";
 
 export const useCareers = () => {
+
   const { data: session } = useSession();
   const [careers, setCareers] = useState<ICareers[]>([]);
   const { data, isPending } = useQueryData(["careers"], () =>
@@ -42,6 +43,7 @@ export const useCareerById = (id: string) => {
 };
 
 export const useCreateCareer = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [requirements, setRequirements] = useState<string[]>([]);
   const [initiaFile, setInitiaFile] = useState<string | null>(null);
   const { data: session } = useSession();
@@ -62,16 +64,17 @@ export const useCreateCareer = () => {
   );
 
 
-  return { mutate, isPending, form, formState, errors, onFormSubmit, watch, setRequirements, initiaFile, requirements };
+  return { mutate, isPending, form, formState, errors, onFormSubmit, watch, setRequirements, initiaFile, requirements,isLoading };
 };
 
 
 export const useUpdateCareer = (id: string) => {
+  
   const [requirements, setRequirements] = useState<string[]>([]);
   const [initiaFile, setInitiaFile] = useState<string | null>(null);
   const { data: session } = useSession();
   const router = useRouter();
-  const { data, isPending: isLoading, isFetched } = useQueryData(["careerById"], () =>
+  const { data, isPending: isLoading, isFetched } = useQueryData(["careerById",id], () =>
     getCareerById(session?.user.token, id)
   );
   const { mutate, isPending, isSuccess } = useMutationData(["updateCareer"], (data: any) =>
@@ -108,7 +111,7 @@ export const useUpdateCareer = (id: string) => {
 
 
 
-  return { mutate, isPending, form, formState, errors, onFormSubmit, watch, setRequirements, initiaFile, requirements };
+  return { mutate, isPending, form, formState, errors, onFormSubmit, watch, setRequirements, initiaFile, requirements,isLoading };
 }
 
 
