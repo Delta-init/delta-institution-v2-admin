@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Save, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,10 @@ const TeamForm = ({ id }: { id?: string }) => {
 
   const hook = id ? useUpdateTeam(id) : useCreateTeam();
   const { form, errors, onFormSubmit, isPending, initiaFile, isLoading } = hook;
+
+useEffect(() => {
+  console.log(form.watch("showingPosition"), typeof form.watch("showingPosition"),"🟢🟢  111");
+}, [form.watch("showingPosition")]);
 
   if (isLoading) {
     return (
@@ -83,15 +87,8 @@ const TeamForm = ({ id }: { id?: string }) => {
         <Input
           className={cn(errors.showingPosition && "border-red-500")}
           id="showingPosition"
-          {...form.register("showingPosition")}
-          onChange={(e) => {
-            if (e.target.value === "") {
-              form.setValue("showingPosition", 0);
-            } else {
-              console.log(e.target.value,Number(e.target.value),"🟢🟢");
-              form.setValue("showingPosition", Number(e.target.value));
-            }
-          }}
+          {...form.register("showingPosition",{valueAsNumber: true})}
+          
           type="number"
           placeholder="Enter showing position"
         />

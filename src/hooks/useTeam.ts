@@ -70,7 +70,7 @@ export const useCreateTeam = () => {
     teamSchema,
     mutate,
     {
-      showingPosition: team.length + 1,
+      showingPosition: 1,
       isActive: true,
       image: null,
     }
