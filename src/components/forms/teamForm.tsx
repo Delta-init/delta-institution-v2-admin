@@ -88,8 +88,8 @@ const TeamForm = ({ id }: { id?: string }) => {
             if (e.target.value === "") {
               form.setValue("showingPosition", 0);
             } else {
-              console.log(e.target.value,parseInt(e.target.value),"🟢🟢");
-              form.setValue("showingPosition", parseInt(e.target.value));
+              console.log(e.target.value,Number(e.target.value),"🟢🟢");
+              form.setValue("showingPosition", Number(e.target.value));
             }
           }}
           placeholder="Enter showing position"
