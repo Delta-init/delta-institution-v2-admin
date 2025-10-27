@@ -92,6 +92,7 @@ const TeamForm = ({ id }: { id?: string }) => {
               form.setValue("showingPosition", Number(e.target.value));
             }
           }}
+          type="number"
           placeholder="Enter showing position"
         />
       </div>
