@@ -54,7 +54,7 @@ export const useCreateTeam = () => {
     if (teamData) {
       console.log("teamData 🔴")
       setTeam((teamData as any).team);
-      form.setValue("showingPosition",(teamData as any).team.length+1);
+      
     }
   }, [teamData])
 
