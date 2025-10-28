@@ -21,11 +21,9 @@ export const createTeam = async (token: string, data: any) => {
     formData.append("image", data?.image)
     formData.append("showingPosition", data?.showingPosition)
     formData.append("isActive", data?.isActive?.toString() || "true")
-    const response = await AxiosInstance(token).post(`${TEAM_URL}/`, formData, {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    })
+    const response = await AxiosInstance(token,{
+        "Content-Type": "multipart/form-data"
+    }).post(`${TEAM_URL}/`, formData,)
     return response.data
 }
 
@@ -37,11 +35,9 @@ export const updateTeam = async (token: string, id: string, data: any) => {
     formData.append("image", data?.image)
     formData.append("showingPosition", data?.showingPosition)
     formData.append("isActive", data?.isActive?.toString() || "true")
-    const response = await AxiosInstance(token).put(`${TEAM_URL}/${id}`, formData, {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    })
+    const response = await AxiosInstance(token,{
+        "Content-Type": "multipart/form-data"
+    }).put(`${TEAM_URL}/${id}`, formData,)
     return response.data
 }
 

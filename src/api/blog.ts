@@ -23,11 +23,9 @@ export const createBlog = async (token: string, data: any) => {
     formData.append("image", data?.image)
     formData.append("tags", data?.tags)
     formData.append("category", data?.category)
-    const response = await AxiosInstance(token).post(`${BLOG_URL}/`, formData, {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    })
+    const response = await AxiosInstance(token,{
+        "Content-Type": "multipart/form-data"
+    }).post(`${BLOG_URL}/`, formData,)
     return response.data
 }
 
@@ -40,11 +38,9 @@ export const updateBlog = async (token: string, id: string, data: any) => {
     formData.append("image", data?.image)
     formData.append("tags", data?.tags)
     formData.append("category", data?.category)
-    const response = await AxiosInstance(token).put(`${BLOG_URL}/${id}`, formData, {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    })
+    const response = await AxiosInstance(token,{
+        "Content-Type": "multipart/form-data"
+    }).put(`${BLOG_URL}/${id}`, formData,)
     return response.data
 }
 
