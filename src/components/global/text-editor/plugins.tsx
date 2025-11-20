@@ -133,7 +133,7 @@ import { TWEET } from "@/components/editor/transformers/markdown-tweet-transform
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export const placeholder = "Press / for commands...";
-const maxLength = 500;
+const maxLength = Infinity;
 
 export function Plugins({}) {
   const [floatingAnchorElem, setFloatingAnchorElem] =

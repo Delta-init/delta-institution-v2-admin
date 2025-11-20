@@ -242,9 +242,13 @@ export function DataTable({
               ))}
             </SelectContent>
           </Select>
-          <div className=" text-sm text-muted-foreground">
+          <div className="md:block hidden text-sm text-muted-foreground">
             Showing {table.getRowModel().rows.length} of{" "}
             {table.getPrePaginationRowModel().rows.length} rows.
+          </div>
+          <div className="md:block hidden text-sm text-muted-foreground">
+             {table.getRowModel().rows.length}/{" "}
+            {table.getPrePaginationRowModel().rows.length}
           </div>
           <div className="space-x-2">
             <Button
